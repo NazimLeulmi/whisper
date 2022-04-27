@@ -35,11 +35,7 @@ function HomeScreen({ navigation }) {
       <Image style={s.faces} source={require("../assets/faces.jpg")} />
       <Text style={s.header}>SHARE WITHOUT INSECURITY</Text>
       <Text style={s.paragraph}>{TEXT}</Text>
-      <Pressable
-        style={s.btn}
-        onPress={() => navigation.navigate("SignUp")}
-        android_ripple
-      >
+      <Pressable style={s.btn} onPress={() => navigation.navigate("SignUp")}>
         <Text style={s.btnText}>GET STARTED</Text>
       </Pressable>
     </View>
