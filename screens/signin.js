@@ -1,14 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  TextInput,
-  View,
-  Text,
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import {Bold,Btn,BtnText,Input,InputContainer,InputIcon,Label,Link,SubHeader} from "./signup";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { s } from "./signup";
 
@@ -17,10 +9,10 @@ function SignIn({ navigation }) {
   let [password, setPassword] = React.useState("");
   let [hidePassword, setHidePassword] = React.useState(true);
   return (
-    <ScrollView style={s.container}>
+    <Container >
       <KeyboardAvoidingView behavior="position">
-        <Image style={s.logo} source={require("../assets/logo.png")} />
-        <Text style={s.header}>SIGN IN</Text>
+        <Logo style={s.logo} source={require("../assets/logo.png")} />
+        <Headline style={s.header}>SIGN IN</Headline>
         <Text style={s.subHeader}>
           Enter your email and password to start chatting
         </Text>
@@ -61,7 +53,7 @@ function SignIn({ navigation }) {
           </Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </Contai>
   );
 }
 

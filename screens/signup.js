@@ -1,18 +1,92 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import { COLORS, FONTS, windowHeight, windowWidth } from "./index";
+import { KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import { COLORS, FONTS } from "./index";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import styled from "styled-components/native";
+
+const Container = styled.ScrollView`
+  flex: 1;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+`;
+
+const Logo = styled.Image`
+  width: 70px;
+  height: 70px;
+  margin-bottom: 30px;
+`;
+
+const Headline = styled.Text`
+  font-family: ${FONTS.regular};
+  font-size: 55px;
+  width: "75%";
+  color: ${COLORS.starblue};
+`;
+
+export const SubHeader = styled.Text`
+  font-family: ${FONTS.regular};
+  font-size: 22px;
+  width: "75%";
+  color: black;
+  margin-bottom: 30;
+`;
+
+export const Label = styled.Text`
+  font-family: ${FONTS.regular};
+  font-size: 15px;
+  width: "75%";
+  color: black;
+`;
+
+export const InputContainer = styled.View`
+  flex-direction: "row";
+  align-items: "center";
+`;
+export const Input = styled.TextInput`
+  width: "100%";
+  height: 60px;
+  background: whitesmoke;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  padding: 0 15px;
+  position: relative;
+`;
+
+export const InputIcon = styled(Icon)`
+  position: absolute;
+  right: 15;
+  color: rgba(0, 0, 0, 0.5);
+`;
+export const Btn = styled.TouchableOpacity`
+  width: "100%";
+  background: ${COLORS.starblue};
+  height: 60px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+`;
+export const BtnText = styled.Text`
+  position: absolute;
+  right: 15;
+  color: rgba(0, 0, 0, 0.5);
+`;
+
+export const Link = styled.Text`
+  text-align: center;
+  font-family: ${FONTS.regular};
+  font-size: 15px;
+  margin: 0 15px;
+`;
+
+export const Bold = styled.Text`
+  font-family: ${FONTS.bold};
+  font-size: 16px;
+`;
 
 function SignUp({ navigation }) {
   let [email, setEmail] = React.useState("");
@@ -20,150 +94,64 @@ function SignUp({ navigation }) {
   let [passwordc, setPasswordc] = React.useState("");
   let [hidePassword, setHidePassword] = React.useState(true);
   return (
-    <ScrollView style={s.container}>
+    <Container>
       <KeyboardAvoidingView behavior="position">
-        <Image style={s.logo} source={require("../assets/logo.png")} />
-        <Text style={s.header}>SIGN UP</Text>
-        <Text style={s.subHeader}>
+        <Logo source={require("../assets/logo.png")} />
+        <Headline>SIGN UP</Headline>
+        <SubHeader>
           Enter a valid email and a strong password to create an account
-        </Text>
-        <Text style={s.label}>EMAIL ADDRESS</Text>
-        <View style={s.inputContainer}>
-          <TextInput
+        </SubHeader>
+        <Label>EMAIL ADDRESS</Label>
+        <InputContainer>
+          <Input
             value={email}
             onChangeText={(text) => setEmail(text)}
-            style={s.input}
             placeholder="Enter a valid email"
             placeholderTextColor="rgba(0,0,0,.25)"
           />
-          <Icon name="account" size={30} style={s.inputIcon} />
-        </View>
-        <Text style={s.label}>PASSWORD</Text>
-        <View style={s.inputContainer}>
-          <TextInput
+          <InputIcon name="account" size={30} />
+        </InputContainer>
+        <Label>PASSWORD</Label>
+        <InputContainer>
+          <Input
             value={password}
             onChangeText={(text) => setPassword(text)}
-            style={s.input}
             placeholder="Enter a strong password"
             placeholderTextColor="rgba(0,0,0,.25)"
             secureTextEntry={hidePassword}
           />
-          <Icon
+          <InputIcon
             onPress={() => setHidePassword(!hidePassword)}
             name={password === "" ? "lock" : hidePassword ? "eye-off" : "eye"}
             size={30}
-            style={s.inputIcon}
           />
-        </View>
-        <Text style={s.label}>PASSWORD CONFIRMATION</Text>
-        <View style={s.inputContainer}>
-          <TextInput
+        </InputContainer>
+        <Label>PASSWORD CONFIRMATION</Label>
+        <InputContainer>
+          <Input
             value={passwordc}
             onChangeText={(text) => setPasswordc(text)}
-            style={s.input}
             placeholder="Confirm your password"
             placeholderTextColor="rgba(0,0,0,.25)"
             secureTextEntry={hidePassword}
           />
-          <Icon
+          <InputIcon
             onPress={() => setHidePassword(!hidePassword)}
             name={passwordc === "" ? "lock" : hidePassword ? "eye-off" : "eye"}
             size={30}
-            style={s.inputIcon}
           />
-        </View>
-        <TouchableOpacity style={s.btn} onPress={() => console.log("Pressed")}>
-          <Text style={s.btnText}>SIGN UP</Text>
-        </TouchableOpacity>
+        </InputContainer>
+        <Btn onPress={() => console.log("Pressed")}>
+          <BtnText>SIGN UP</BtnText>
+        </Btn>
         <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-          <Text style={s.link}>
-            Already have an account ? <Text style={s.bold}> SIGN IN</Text>
-          </Text>
+          <Link style={s.link}>
+            Already have an account ? <Bold> SIGN IN</Bold>
+          </Link>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </Container>
   );
 }
-
-export const s = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    padding: 20,
-  },
-  logo: {
-    width: 70,
-    height: 70,
-    marginBottom: 30,
-  },
-  header: {
-    fontFamily: FONTS.regular,
-    fontSize: 55,
-    width: "75%",
-    color: COLORS.starblue,
-  },
-  subHeader: {
-    fontFamily: FONTS.regular,
-    fontSize: 22,
-    width: "75%",
-    color: "black",
-    marginBottom: 30,
-  },
-  label: {
-    fontFamily: FONTS.regular,
-    fontSize: 15,
-    width: "75%",
-    color: "black",
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  input: {
-    width: "100%",
-    height: 60,
-    backgroundColor: "whitesmoke",
-    borderWidth: 0.5,
-    borderColor: "rgba(0,0,0,.1)",
-    marginTop: 8,
-    marginBottom: 10,
-    fontSize: 18,
-    paddingLeft: 15,
-    paddingRight: 15,
-    position: "relative",
-    borderRadius: 10,
-  },
-
-  inputIcon: {
-    position: "absolute",
-    right: 15,
-    color: "rgba(0,0,0,.5)",
-  },
-  btn: {
-    width: "100%",
-    backgroundColor: COLORS.starblue,
-    height: 60,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  btnText: {
-    color: "whitesmoke",
-    fontFamily: FONTS.regular,
-    fontSize: 24,
-  },
-  link: {
-    textAlign: "center",
-    fontFamily: FONTS.regular,
-    fontSize: 15,
-    marginTop: 16,
-    marginBottom: 16,
-  },
-  bold: {
-    fontSize: 16,
-    color: COLORS.starblue,
-  },
-});
 
 export default SignUp;
