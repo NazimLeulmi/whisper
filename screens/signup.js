@@ -1,50 +1,53 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
 import { KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { COLORS, FONTS } from "./index";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import styled from "styled-components/native";
 
-const Container = styled.ScrollView`
+export const Something = styled.TextInput`
+  background-color:red;
+`;
+
+export const Container = styled.ScrollView`
   flex: 1;
   background: rgba(255, 255, 255, 0.9);
   padding: 20px;
 `;
 
-const Logo = styled.Image`
+export const Logo = styled.Image`
   width: 70px;
   height: 70px;
   margin-bottom: 30px;
 `;
 
-const Headline = styled.Text`
+export const Headline = styled.Text`
   font-family: ${FONTS.regular};
   font-size: 55px;
-  width: "75%";
+  width: 75%;
   color: ${COLORS.starblue};
 `;
 
 export const SubHeader = styled.Text`
   font-family: ${FONTS.regular};
   font-size: 22px;
-  width: "75%";
+  width: 75%;
   color: black;
-  margin-bottom: 30;
+  margin-bottom: 30px;
 `;
 
 export const Label = styled.Text`
   font-family: ${FONTS.regular};
   font-size: 15px;
-  width: "75%";
+  width: 75%;
   color: black;
 `;
 
 export const InputContainer = styled.View`
-  flex-direction: "row";
-  align-items: "center";
+  flex-direction: row;
+  align-items: center;
 `;
 export const Input = styled.TextInput`
-  width: "100%";
+  width: 100%;
   height: 60px;
   background: whitesmoke;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
@@ -58,11 +61,11 @@ export const Input = styled.TextInput`
 
 export const InputIcon = styled(Icon)`
   position: absolute;
-  right: 15;
+  right: 15px;
   color: rgba(0, 0, 0, 0.5);
 `;
 export const Btn = styled.TouchableOpacity`
-  width: "100%";
+  width: 100%;
   background: ${COLORS.starblue};
   height: 60px;
   border-radius: 10px;
@@ -71,21 +74,23 @@ export const Btn = styled.TouchableOpacity`
   margin-top: 10px;
 `;
 export const BtnText = styled.Text`
-  position: absolute;
-  right: 15;
-  color: rgba(0, 0, 0, 0.5);
+  font-family: ${FONTS.regular};
+  font-size: 22px;
+  color: white;
+  letter-spacing: 1px;
 `;
 
 export const Link = styled.Text`
   text-align: center;
-  font-family: ${FONTS.regular};
+  font-family: ${FONTS.light};
   font-size: 15px;
-  margin: 0 15px;
+  margin: 20px 0;
 `;
 
 export const Bold = styled.Text`
   font-family: ${FONTS.bold};
   font-size: 16px;
+  color: ${COLORS.starblue};
 `;
 
 function SignUp({ navigation }) {
@@ -145,7 +150,7 @@ function SignUp({ navigation }) {
           <BtnText>SIGN UP</BtnText>
         </Btn>
         <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-          <Link style={s.link}>
+          <Link>
             Already have an account ? <Bold> SIGN IN</Bold>
           </Link>
         </TouchableOpacity>

@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import {Dimensions} from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 
 export const COLORS = {
@@ -26,7 +26,7 @@ const Container = styled.View`
   flex: 1;
   background: whitesmoke;
   position: relative;
-  padding: 20;
+  padding: 20px;
 `;
 
 const Faces = styled.Image`
@@ -51,10 +51,10 @@ const Introduction = styled.Text`
   color: black;
 `;
 const Btn = styled.TouchableOpacity`
-  width: "100%";
+  width: 100%;
   height: 55px;
   justify-content: center;
-  align-items: "center";
+  align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   margin-top: 22px;
@@ -74,18 +74,16 @@ const TEXT =
 
 function HomeScreen({ navigation }) {
   return (
-    <Container style={s.container}>
+    <Container>
       <StatusBar style="light" translucent={false} />
       <Faces source={require("../assets/faces.jpg")} />
       <Headline>SHARE WITHOUT INSECURITY</Headline>
       <Introduction>{TEXT}</Introduction>
       <Btn onPress={() => navigation.navigate("SignUp")}>
-        <BtnText >GET STARTED</BtnText>
+        <BtnText>GET STARTED</BtnText>
       </Btn>
     </Container>
   );
 }
-
-
 
 export default HomeScreen;
