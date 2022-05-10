@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Dimensions, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 
+
 export const COLORS = {
   /* CSS HEX */
   yellow: "#FCCE00ff",

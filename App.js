@@ -9,17 +9,11 @@ import SignUp from "./screens/signup";
 import SignIn from "./screens/signin";
 import { Text, View } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import Chats from "./screens/chats";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Chats() {
-  return (
-    <View>
-      <Text>CHATS</Text>
-    </View>
-  );
-}
 function Contacts() {
   return (
     <View>
