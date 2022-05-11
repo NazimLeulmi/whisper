@@ -1,65 +1,65 @@
 import React from "react";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {
-  Bold,
-  Btn,
-  BtnText,
-  Input,
-  InputContainer,
-  InputIcon,
-  Label,
-  Link,
-  SubHeader,
-  Container,
-  Headline,
-  Logo,
-} from "./signup";
-import { KeyboardAvoidingView, TouchableOpacity } from "react-native";
-
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  View,
+  Text,
+  TextInput,
+  Image,
+  Pressable,
+} from "react-native";
+import { s } from "./signup";
 function SignIn({ navigation }) {
   let [email, setEmail] = React.useState("");
   let [password, setPassword] = React.useState("");
   let [hidePassword, setHidePassword] = React.useState(true);
   return (
-    <Container>
+    <View style={s.container}>
       <KeyboardAvoidingView behavior="position">
-        <Logo source={require("../assets/logo.png")} />
-        <Headline>SIGN IN</Headline>
-        <SubHeader>Enter your email and password to start chatting</SubHeader>
-        <Label>EMAIL ADDRESS</Label>
-        <InputContainer>
-          <Input
+        <Image style={s.logo} source={require("../assets/logo.png")} />
+        <Text style={s.headline}>SIGN IN</Text>
+        <Text style={s.subHeader}>
+          Enter your email and password to start chatting
+        </Text>
+        <Text style={s.label}>EMAIL ADDRESS</Text>
+        <View style={s.inputContainer}>
+          <TextInput
+            style={s.input}
             value={email}
             onChangeText={(text) => setEmail(text)}
             placeholder="Enter a valid email"
             placeholderTextColor="rgba(0,0,0,.25)"
           />
-          <InputIcon name="account" size={30} />
-        </InputContainer>
-        <Label>PASSWORD</Label>
-        <InputContainer>
-          <Input
+          <Icon style={s.inputIcon} name="account" size={30} />
+        </View>
+        <Text style={s.label}>PASSWORD</Text>
+        <View style={s.inputContainer}>
+          <TextInput
+            style={s.input}
             value={password}
             onChangeText={(text) => setPassword(text)}
             placeholder="Enter a strong password"
             placeholderTextColor="rgba(0,0,0,.25)"
             secureTextEntry={hidePassword}
           />
-          <InputIcon
+          <Icon
+            style={s.inputIcon}
             onPress={() => setHidePassword(!hidePassword)}
             name={password === "" ? "lock" : hidePassword ? "eye-off" : "eye"}
             size={30}
           />
-        </InputContainer>
-        <Btn>
-          <BtnText>SIGN IN</BtnText>
-        </Btn>
+        </View>
+        <Pressable style={s.btn}>
+          <Text style={s.btnText}>SIGN IN</Text>
+        </Pressable>
         <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-          <Link>
-            Don't have an account ? <Bold> SIGN UP</Bold>
-          </Link>
+          <Text style={s.link}>
+            Don't have an account ? <Text style={s.bold}> SIGN UP</Text>
+          </Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-    </Container>
+    </View>
   );
 }
 

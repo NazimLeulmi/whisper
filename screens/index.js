@@ -1,8 +1,13 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Dimensions, StyleSheet } from "react-native";
-import styled from "styled-components/native";
-
+import {
+  Dimensions,
+  StyleSheet,
+  Image,
+  View,
+  Text,
+  Pressable,
+} from "react-native";
 
 export const COLORS = {
   /* CSS HEX */
@@ -23,51 +28,6 @@ export const FONTS = {
 export let windowWidth = Dimensions.get("window").width;
 export let windowHeight = Dimensions.get("window").height;
 
-const Container = styled.View`
-  flex: 1;
-  background: whitesmoke;
-  position: relative;
-  padding: 20px;
-`;
-
-const Faces = styled.Image`
-  width: ${windowWidth - 40}px;
-  height: 300px;
-  align-self: center;
-  margin: 20px;
-  margin-top: 0px;
-  border-radius: 10px;
-`;
-
-const Headline = styled.Text`
-  font-family: ${FONTS.bold};
-  font-size: 48px;
-  color: black;
-  line-height: 48px;
-`;
-
-const Introduction = styled.Text`
-  font-family: ${FONTS.regular};
-  font-size: 22px;
-  color: black;
-`;
-const Btn = styled.TouchableOpacity`
-  width: 100%;
-  height: 55px;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  margin-top: 22px;
-  margin-bottom: 22px;
-  background-color: ${COLORS.starblue};
-`;
-const BtnText = styled.Text`
-  font-family: ${FONTS.regular};
-  font-size: 22px;
-  color: whitesmoke;
-`;
-
 const TEXT =
   "keep your conversations secure. We can't read your messages" +
   " or listen to your calls, and no one else can either. Privacy isn’t optional " +
@@ -75,16 +35,61 @@ const TEXT =
 
 function HomeScreen({ navigation }) {
   return (
-    <Container>
+    <View style={s.container}>
       <StatusBar style="light" translucent={false} />
-      <Faces source={require("../assets/faces.jpg")} />
-      <Headline>SHARE WITHOUT INSECURITY</Headline>
-      <Introduction>{TEXT}</Introduction>
-      <Btn onPress={() => navigation.navigate("SignUp")}>
-        <BtnText>GET STARTED</BtnText>
-      </Btn>
-    </Container>
+      <Image style={s.faces} source={require("../assets/faces.jpg")} />
+      <Text style={s.headline}>SHARE WITHOUT INSECURITY</Text>
+      <Text style={s.intro}>{TEXT}</Text>
+      <Pressable style={s.btn} onPress={() => navigation.navigate("SignUp")}>
+        <Text style={s.btnText}>GET STARTED</Text>
+      </Pressable>
+    </View>
   );
 }
+
+const s = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "whitesmoke",
+    position: "relative",
+    padding: 20,
+  },
+  faces: {
+    width: windowWidth - 40,
+    height: 300,
+    alignSelf: "center",
+    margin: 20,
+    marginTop: 0,
+    borderRadius: 10,
+  },
+  headline: {
+    fontFamily: FONTS.bold,
+    fontSize: 48,
+    color: "black",
+    lineHeight: 48,
+  },
+  intro: {
+    fontFamily: FONTS.regular,
+    fontSize: 22,
+    color: "black",
+  },
+  btn: {
+    width: "100%",
+    height: 55,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "rgba(0,0,0,.1)",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 22,
+    marginBottom: 22,
+    backgroundColor: COLORS.starblue,
+  },
+  btnText: {
+    fontFamily: FONTS.regular,
+    fontSize: 22,
+    color: "whitesmoke",
+  },
+});
 
 export default HomeScreen;
