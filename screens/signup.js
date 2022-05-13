@@ -11,12 +11,22 @@ import {
 } from "react-native";
 import { COLORS, FONTS } from "./index";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { useForm, Controller } from "react-hook-form";
 
 function SignUp({ navigation }) {
-  let [email, setEmail] = React.useState("");
-  let [password, setPassword] = React.useState("");
-  let [passwordc, setPasswordc] = React.useState("");
   let [hidePassword, setHidePassword] = React.useState(true);
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+
+  function submitForm(data) {
+    console.log(data);
+  }
+
+  console.log("Rendered");
   return (
     <View style={s.container}>
       <KeyboardAvoidingView behavior="position">
@@ -27,50 +37,86 @@ function SignUp({ navigation }) {
         </Text>
         <Text style={s.label}>EMAIL ADDRESS</Text>
         <View style={s.inputContainer}>
-          <TextInput
-            style={s.input}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            placeholder="Enter a valid email"
-            placeholderTextColor="rgba(0,0,0,.25)"
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <>
+                <TextInput
+                  style={s.input}
+                  placeholder="Enter a valid email"
+                  placeholderTextColor="rgba(0,0,0,.25)"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                />
+                <Icon style={s.inputIcon} name="account" size={30} />
+              </>
+            )}
           />
-          <Icon style={s.inputIcon} name="account" size={30} />
         </View>
         <Text style={s.label}>PASSWORD</Text>
         <View style={s.inputContainer}>
-          <TextInput
-            style={s.input}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            placeholder="Enter a strong password"
-            placeholderTextColor="rgba(0,0,0,.25)"
-            secureTextEntry={hidePassword}
-          />
-          <Icon
-            style={s.inputIcon}
-            onPress={() => setHidePassword(!hidePassword)}
-            name={password === "" ? "lock" : hidePassword ? "eye-off" : "eye"}
-            size={30}
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <>
+                <TextInput
+                  style={s.input}
+                  placeholder="Enter a strong password"
+                  placeholderTextColor="rgba(0,0,0,.25)"
+                  secureTextEntry={hidePassword}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                />
+                <Icon
+                  style={s.inputIcon}
+                  onPress={() => setHidePassword(!hidePassword)}
+                  name={
+                    value === "" || value === undefined
+                      ? "lock"
+                      : hidePassword
+                      ? "eye-off"
+                      : "eye"
+                  }
+                  size={30}
+                />
+              </>
+            )}
           />
         </View>
         <Text style={s.label}>PASSWORD CONFIRMATION</Text>
         <View style={s.inputContainer}>
-          <TextInput
-            style={s.input}
-            value={passwordc}
-            onChangeText={(text) => setPasswordc(text)}
-            placeholder="Confirm your password"
-            placeholderTextColor="rgba(0,0,0,.25)"
-            secureTextEntry={hidePassword}
-          />
-          <Icon
-            style={s.inputIcon}
-            onPress={() => setHidePassword(!hidePassword)}
-            name={passwordc === "" ? "lock" : hidePassword ? "eye-off" : "eye"}
-            size={30}
+          <Controller
+            name="passwordc"
+            control={control}
+            render={({ field: { value, onBlur, onChange } }) => (
+              <>
+                <TextInput
+                  style={s.input}
+                  placeholder="Confirm your password"
+                  placeholderTextColor="rgba(0,0,0,.25)"
+                  secureTextEntry={hidePassword}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                />
+                <Icon
+                  style={s.inputIcon}
+                  onPress={() => setHidePassword(!hidePassword)}
+                  name={
+                    value === "" || value === undefined
+                      ? "lock"
+                      : hidePassword
+                      ? "eye-off"
+                      : "eye"
+                  }
+                  size={30}
+                />
+              </>
+            )}
           />
         </View>
-        <Pressable style={s.btn} onPress={() => console.log("Pressed")}>
+        <Pressable style={s.btn} onPress={handleSubmit(submitForm)}>
           <Text style={s.btnText}>SIGN UP</Text>
         </Pressable>
         <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>

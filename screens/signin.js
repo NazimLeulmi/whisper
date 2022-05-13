@@ -10,9 +10,18 @@ import {
   Pressable,
 } from "react-native";
 import { s } from "./signup";
+import { useForm, Controller } from "react-hook-form";
+
 function SignIn({ navigation }) {
-  let [email, setEmail] = React.useState("");
-  let [password, setPassword] = React.useState("");
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+
+  function submitForm(data) {
+    console.log(data);
+  }
   let [hidePassword, setHidePassword] = React.useState(true);
   return (
     <View style={s.container}>
@@ -24,33 +33,55 @@ function SignIn({ navigation }) {
         </Text>
         <Text style={s.label}>EMAIL ADDRESS</Text>
         <View style={s.inputContainer}>
-          <TextInput
-            style={s.input}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            placeholder="Enter a valid email"
-            placeholderTextColor="rgba(0,0,0,.25)"
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <>
+                <TextInput
+                  style={s.input}
+                  placeholder="Enter your email address"
+                  placeholderTextColor="rgba(0,0,0,.25)"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                />
+                <Icon style={s.inputIcon} name="account" size={30} />
+              </>
+            )}
           />
-          <Icon style={s.inputIcon} name="account" size={30} />
         </View>
         <Text style={s.label}>PASSWORD</Text>
         <View style={s.inputContainer}>
-          <TextInput
-            style={s.input}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            placeholder="Enter a strong password"
-            placeholderTextColor="rgba(0,0,0,.25)"
-            secureTextEntry={hidePassword}
-          />
-          <Icon
-            style={s.inputIcon}
-            onPress={() => setHidePassword(!hidePassword)}
-            name={password === "" ? "lock" : hidePassword ? "eye-off" : "eye"}
-            size={30}
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <>
+                <TextInput
+                  style={s.input}
+                  placeholder="Enter your password"
+                  placeholderTextColor="rgba(0,0,0,.25)"
+                  secureTextEntry={hidePassword}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                />
+                <Icon
+                  style={s.inputIcon}
+                  onPress={() => setHidePassword(!hidePassword)}
+                  name={
+                    value === "" || value === undefined
+                      ? "lock"
+                      : hidePassword
+                      ? "eye-off"
+                      : "eye"
+                  }
+                  size={30}
+                />
+              </>
+            )}
           />
         </View>
-        <Pressable style={s.btn}>
+        <Pressable style={s.btn} onPress={handleSubmit(submitForm)}>
           <Text style={s.btnText}>SIGN IN</Text>
         </Pressable>
         <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
