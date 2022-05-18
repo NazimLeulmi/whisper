@@ -19,14 +19,17 @@ function SignUp({ navigation }) {
   const {
     handleSubmit,
     control,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onBlur" });
+
+  const password = React.useRef({});
+  password.current = watch("password", "");
 
   function submitForm(data) {
     console.log(data);
   }
 
-  console.log("Rendered");
   return (
     <View style={s.container}>
       <KeyboardAvoidingView behavior="position">
@@ -40,6 +43,21 @@ function SignUp({ navigation }) {
           <Controller
             control={control}
             name="email"
+            rules={{
+              required: { value: true, message: "The email is required" },
+              minLength: {
+                value: 6,
+                message: "The minimum length is 6 characters",
+              },
+              maxLength: {
+                value: 40,
+                message: "The maximum length is 40 characters",
+              },
+              pattern: {
+                value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+                message: "The email is invalid",
+              },
+            }}
             render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <TextInput
@@ -54,11 +72,19 @@ function SignUp({ navigation }) {
             )}
           />
         </View>
+        {errors.email && <Text style={s.error}>{errors.email.message}</Text>}
         <Text style={s.label}>PASSWORD</Text>
         <View style={s.inputContainer}>
           <Controller
             control={control}
             name="password"
+            rules={{
+              required: { value: true, message: "The password is required" },
+              minLength: {
+                value: 8,
+                message: "The minimume length is 8 characters",
+              },
+            }}
             render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <TextInput
@@ -85,11 +111,23 @@ function SignUp({ navigation }) {
             )}
           />
         </View>
+        {errors.password && (
+          <Text style={s.error}>{errors.password.message}</Text>
+        )}
         <Text style={s.label}>PASSWORD CONFIRMATION</Text>
         <View style={s.inputContainer}>
           <Controller
             name="passwordc"
             control={control}
+            rules={{
+              required: {
+                value: true,
+                message: "The password confirmation is required",
+              },
+              validate: (value) =>
+                value === password.current ||
+                "The password confirmation doesn't match",
+            }}
             render={({ field: { value, onBlur, onChange } }) => (
               <>
                 <TextInput
@@ -116,6 +154,9 @@ function SignUp({ navigation }) {
             )}
           />
         </View>
+        {errors.passwordc && (
+          <Text style={s.error}>{errors.passwordc.message}</Text>
+        )}
         <Pressable style={s.btn} onPress={handleSubmit(submitForm)}>
           <Text style={s.btnText}>SIGN UP</Text>
         </Pressable>
@@ -208,6 +249,12 @@ export const s = StyleSheet.create({
     fontFamily: FONTS.bold,
     fontSize: 16,
     color: COLORS.starblue,
+  },
+  error: {
+    fontFamily: FONTS.bold,
+    fontSize: 12,
+    color: COLORS.feiryrose,
+    marginBottom: 10,
   },
 });
 

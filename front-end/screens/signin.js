@@ -36,6 +36,21 @@ function SignIn({ navigation }) {
           <Controller
             control={control}
             name="email"
+            rules={{
+              required: { value: true, message: "The email is required" },
+              minLength: {
+                value: 6,
+                message: "The minimum length is 6 characters",
+              },
+              maxLength: {
+                value: 40,
+                message: "The maximum length is 40 characters",
+              },
+              pattern: {
+                value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+                message: "The email is invalid",
+              },
+            }}
             render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <TextInput
@@ -50,6 +65,7 @@ function SignIn({ navigation }) {
             )}
           />
         </View>
+        {errors.email && <Text style={s.error}>{errors.email.message}</Text>}
         <Text style={s.label}>PASSWORD</Text>
         <View style={s.inputContainer}>
           <Controller
