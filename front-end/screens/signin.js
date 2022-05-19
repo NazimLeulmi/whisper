@@ -54,7 +54,7 @@ function SignIn({ navigation }) {
             render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <TextInput
-                  style={s.input}
+                  style={errors.email ? s.inputError : s.input}
                   placeholder="Enter your email address"
                   placeholderTextColor="rgba(0,0,0,.25)"
                   onChangeText={onChange}

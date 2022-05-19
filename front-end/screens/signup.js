@@ -7,11 +7,12 @@ import {
   Text,
   TextInput,
   Image,
-  Pressable,
+  ScrollView,
 } from "react-native";
 import { COLORS, FONTS } from "./index";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
 
 function SignUp({ navigation }) {
   let [hidePassword, setHidePassword] = React.useState(true);
@@ -26,13 +27,22 @@ function SignUp({ navigation }) {
   const password = React.useRef({});
   password.current = watch("password", "");
 
-  function submitForm(data) {
-    console.log(data);
+  async function submitForm(formData) {
+    try {
+      let response = await axios.post("http://localhost:8888/signup", formData);
+      let data = await response.data;
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
-    <View style={s.container}>
-      <KeyboardAvoidingView behavior="position">
+    <KeyboardAvoidingView style={s.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
+      >
         <Image style={s.logo} source={require("../assets/logo.png")} />
         <Text style={s.headline}>SIGN UP</Text>
         <Text style={s.subHeader}>
@@ -61,8 +71,43 @@ function SignUp({ navigation }) {
             render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <TextInput
-                  style={s.input}
+                  style={errors.email ? s.inputError : s.input}
                   placeholder="Enter a valid email"
+                  placeholderTextColor="rgba(0,0,0,.25)"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                />
+                <Icon style={s.inputIcon} name="email" size={30} />
+              </>
+            )}
+          />
+        </View>
+        {errors.email && <Text style={s.error}>{errors.email.message}</Text>}
+        <Text style={s.label}>USERNAME</Text>
+        <View style={s.inputContainer}>
+          <Controller
+            control={control}
+            name="username"
+            rules={{
+              required: { value: true, message: "The username is required" },
+              minLength: {
+                value: 3,
+                message: "The minimum length is 3 characters",
+              },
+              maxLength: {
+                value: 20,
+                message: "The maximum length is 20 characters",
+              },
+              pattern: {
+                value: /^[a-z0-9]+$/i,
+                message: "The username is must be alphanumeric",
+              },
+            }}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <>
+                <TextInput
+                  style={errors.username ? s.inputError : s.input}
+                  placeholder="Enter your username"
                   placeholderTextColor="rgba(0,0,0,.25)"
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -72,7 +117,9 @@ function SignUp({ navigation }) {
             )}
           />
         </View>
-        {errors.email && <Text style={s.error}>{errors.email.message}</Text>}
+        {errors.username && (
+          <Text style={s.error}>{errors.username.message}</Text>
+        )}
         <Text style={s.label}>PASSWORD</Text>
         <View style={s.inputContainer}>
           <Controller
@@ -88,7 +135,7 @@ function SignUp({ navigation }) {
             render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <TextInput
-                  style={s.input}
+                  style={errors.password ? s.inputError : s.input}
                   placeholder="Enter a strong password"
                   placeholderTextColor="rgba(0,0,0,.25)"
                   secureTextEntry={hidePassword}
@@ -131,7 +178,7 @@ function SignUp({ navigation }) {
             render={({ field: { value, onBlur, onChange } }) => (
               <>
                 <TextInput
-                  style={s.input}
+                  style={errors.passwordc ? s.inputError : s.input}
                   placeholder="Confirm your password"
                   placeholderTextColor="rgba(0,0,0,.25)"
                   secureTextEntry={hidePassword}
@@ -157,16 +204,16 @@ function SignUp({ navigation }) {
         {errors.passwordc && (
           <Text style={s.error}>{errors.passwordc.message}</Text>
         )}
-        <Pressable style={s.btn} onPress={handleSubmit(submitForm)}>
+        <TouchableOpacity style={s.btn} onPress={handleSubmit(submitForm)}>
           <Text style={s.btnText}>SIGN UP</Text>
-        </Pressable>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
           <Text style={s.link}>
             Already have an account ? <Text style={s.bold}> SIGN IN</Text>
           </Text>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -207,9 +254,23 @@ export const s = StyleSheet.create({
   input: {
     width: "100%",
     height: 60,
-    backgroundColor: "whitesmoke",
+    backgroundColor: "#FAF9F6",
     borderWidth: 0.5,
     borderColor: "rgba(0,0,0,.1)",
+    borderRadius: 15,
+    marginTop: 8,
+    marginBottom: 10,
+    fontSize: 18,
+    paddingLeft: 15,
+    paddingRight: 15,
+    position: "relative",
+  },
+  inputError: {
+    width: "100%",
+    height: 60,
+    backgroundColor: "#FAF9F6",
+    borderWidth: 1,
+    borderColor: COLORS.feiryrose,
     borderRadius: 15,
     marginTop: 8,
     marginBottom: 10,
@@ -251,7 +312,7 @@ export const s = StyleSheet.create({
     color: COLORS.starblue,
   },
   error: {
-    fontFamily: FONTS.bold,
+    fontFamily: FONTS.regular,
     fontSize: 12,
     color: COLORS.feiryrose,
     marginBottom: 10,
