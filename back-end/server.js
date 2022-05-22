@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-// const validation = require('./validation');
+const validation = require("./validation");
 const models = require("./models");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
@@ -31,19 +31,25 @@ async function connectDB() {
 }
 
 app.post("/signup", async (req, res) => {
-  //   const { isValid, errors } = validation.validateSignUp(req.body);
-  //   if (!isValid) return res.json({ isValid, errors });
-  const { username, email, passwordc, password } = req.body;
-  const hash = await bcrypt.hash(password, 12);
-  const userModel = new models.UserModel({
-    username: username,
-    email: email,
-    password: hash,
-    passwordc: passwordc,
-  });
-  const userEntry = await userModel.save().catch((err) => console.log(err));
-  console.log("Registered", userEntry);
-  return res.json({ success: true });
+  console.log(req.body);
+  const { isValid, errors } = validation.validateSignUp(req.body);
+  if (!isValid) return res.json({ isValid, errors });
+  try {
+    const { username, email, passwordc, password } = req.body;
+    const hash = await bcrypt.hash(password, 12);
+    const userModel = new models.UserModel({
+      name: username,
+      email: email,
+      password: hash,
+      passwordc: passwordc,
+    });
+    const userEntry = await userModel.save().catch((err) => console.log(err));
+    console.log("Registered", userEntry);
+    return res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false });
+  }
 });
 
 app.listen(8888, () => console.log("Node.js server running on port 8888"));

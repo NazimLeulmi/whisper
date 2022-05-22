@@ -22,6 +22,7 @@ function SignUp({ navigation }) {
     control,
     watch,
     formState: { errors },
+    setError,
   } = useForm({ mode: "onBlur" });
 
   const password = React.useRef({});
@@ -29,9 +30,16 @@ function SignUp({ navigation }) {
 
   async function submitForm(formData) {
     try {
-      let response = await axios.post("http://localhost:8888/signup", formData);
+      let response = await axios.post(
+        "http://192.168.1.103:8888/signup",
+        formData
+      );
       let data = await response.data;
-      console.log(data);
+      if (data.isValid === false) {
+        for (const errorName in data.errors) {
+          console.log(`${errorName}: ${data.errors[errorName]}`);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -53,21 +61,21 @@ function SignUp({ navigation }) {
           <Controller
             control={control}
             name="email"
-            rules={{
-              required: { value: true, message: "The email is required" },
-              minLength: {
-                value: 6,
-                message: "The minimum length is 6 characters",
-              },
-              maxLength: {
-                value: 40,
-                message: "The maximum length is 40 characters",
-              },
-              pattern: {
-                value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-                message: "The email is invalid",
-              },
-            }}
+            // rules={{
+            //   required: { value: true, message: "The email is required" },
+            //   minLength: {
+            //     value: 6,
+            //     message: "The minimum length is 6 characters",
+            //   },
+            //   maxLength: {
+            //     value: 40,
+            //     message: "The maximum length is 40 characters",
+            //   },
+            //   pattern: {
+            //     value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+            //     message: "The email is invalid",
+            //   },
+            // }}
             render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <TextInput
