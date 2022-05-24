@@ -38,6 +38,12 @@ function SignUp({ navigation }) {
       if (data.isValid === false) {
         for (const errorName in data.errors) {
           console.log(`${errorName}: ${data.errors[errorName]}`);
+          if (data.errors[errorName]) {
+            setError(errorName, {
+              type: "server",
+              message: data.errors[errorName],
+            });
+          }
         }
       }
     } catch (error) {
@@ -61,21 +67,21 @@ function SignUp({ navigation }) {
           <Controller
             control={control}
             name="email"
-            // rules={{
-            //   required: { value: true, message: "The email is required" },
-            //   minLength: {
-            //     value: 6,
-            //     message: "The minimum length is 6 characters",
-            //   },
-            //   maxLength: {
-            //     value: 40,
-            //     message: "The maximum length is 40 characters",
-            //   },
-            //   pattern: {
-            //     value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-            //     message: "The email is invalid",
-            //   },
-            // }}
+            rules={{
+              required: { value: true, message: "The email is required" },
+              minLength: {
+                value: 6,
+                message: "The minimum length is 6 characters",
+              },
+              maxLength: {
+                value: 40,
+                message: "The maximum length is 40 characters",
+              },
+              pattern: {
+                value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+                message: "The email is invalid",
+              },
+            }}
             render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <TextInput
@@ -103,8 +109,8 @@ function SignUp({ navigation }) {
                 message: "The minimum length is 3 characters",
               },
               maxLength: {
-                value: 20,
-                message: "The maximum length is 20 characters",
+                value: 10,
+                message: "The maximum length is 10 characters",
               },
               pattern: {
                 value: /^[a-z0-9]+$/i,

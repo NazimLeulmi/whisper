@@ -19,6 +19,10 @@ function validateSignUp(data) {
     errors.username = "The username is required";
   } else if (!validator.isAlphanumeric(username)) {
     errors.username = "The username must contain only letters and numbers";
+  } else if (username.length < 3) {
+    errors.username = "The minimum length is 3 characters";
+  } else if (username.length > 20) {
+    errors.username = "The maximum length is 10 characters";
   }
   // Password input validation
   if (password === "" || password === null || password === undefined) {
@@ -35,5 +39,15 @@ function validateSignUp(data) {
     errors.email + errors.password + errors.username + errors.passwordc;
   return { isValid: errorsString === "" ? true : false, errors };
 }
+function validateSignIn(email) {
+  // Email input validation
+  let error = "";
+  if (email === "" || email === null || email === undefined) {
+    error = "The email address is required";
+  } else if (!validator.isEmail(email)) {
+    error = "The email address is invalid";
+  }
+  return { isValid: error === "" ? true : false, error };
+}
 
-module.exports = { validateSignUp };
+module.exports = { validateSignUp, validateSignIn };
