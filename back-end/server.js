@@ -50,7 +50,7 @@ app.post("/signup", async (req, res) => {
     });
     const userEntry = await userModel.save().catch((err) => console.log(err));
     console.log("Registered", userEntry);
-    return res.json({ success: true });
+    return res.json({ isValid: true });
   } catch (error) {
     console.log(error);
     return res.json({ success: false });
