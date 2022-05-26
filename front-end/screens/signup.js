@@ -1,24 +1,18 @@
 import React from "react";
-import {
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  ScrollView,
-} from "react-native";
-import { COLORS, FONTS } from "./index";
-import { useForm, Controller } from "react-hook-form";
+import { KeyboardAvoidingView, StyleSheet, ScrollView } from "react-native";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRoute } from "@react-navigation/native";
 import Label from "./components/authLabel";
 import Header from "./components/authHeader";
 import Input from "./components/authInput";
 import Error from "./components/authError";
+import Btn from "./components/authBtn";
+import Link from "./components/authLink";
 import { useFocusEffect } from "@react-navigation/native";
 
 function SignUp({ navigation }) {
   const route = useRoute();
-
   const {
     handleSubmit,
     control,
@@ -56,13 +50,12 @@ function SignUp({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log("Focused");
       return function () {
-        console.log("Out of focus");
-        reset({ email: "", password: "", username: "", passwordc: "" });
+        reset();
       };
     }, [])
   );
+
   return (
     <KeyboardAvoidingView style={s.container}>
       <ScrollView
@@ -91,14 +84,12 @@ function SignUp({ navigation }) {
           password={password.current}
         />
         {errors.passwordc ? <Error text={errors.passwordc.message} /> : null}
-        <TouchableOpacity style={s.btn} onPress={handleSubmit(submitForm)}>
-          <Text style={s.btnText}>SIGN UP</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-          <Text style={s.link}>
-            Already have an account ? <Text style={s.bold}> SIGN IN</Text>
-          </Text>
-        </TouchableOpacity>
+        <Btn
+          handleSubmit={handleSubmit}
+          submitForm={submitForm}
+          route={route.name}
+        />
+        <Link route={route.name} navigate={navigation.navigate} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -109,35 +100,6 @@ export const s = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(255,255,255,.9)",
     padding: 20,
-  },
-
-  btn: {
-    width: "100%",
-    backgroundColor: COLORS.starblue,
-    height: 60,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  btnText: {
-    fontFamily: FONTS.regular,
-    fontSize: 22,
-    color: "white",
-    letterSpacing: 1,
-  },
-  link: {
-    textAlign: "center",
-    fontFamily: FONTS.light,
-    fontSize: 15,
-    marginTop: 20,
-    marginBottom: 20,
-    color: "black",
-  },
-  bold: {
-    fontFamily: FONTS.bold,
-    fontSize: 16,
-    color: COLORS.starblue,
   },
 });
 

@@ -13,6 +13,8 @@ function validateSignUp(data) {
     errors.email = "The email address is required";
   } else if (!validator.isEmail(email)) {
     errors.email = "The email address is invalid";
+  } else if (email.length > 60) {
+    errors.email = "The maximum length is 60 characters";
   }
   // User name input validation
   if (username === "" || username === null || username === undefined) {
@@ -46,6 +48,8 @@ function validateSignIn(email) {
     error = "The email address is required";
   } else if (!validator.isEmail(email)) {
     error = "The email address is invalid";
+  } else if (email.length > 60) {
+    error = "The maximum length is 60 characters";
   }
   return { isValid: error === "" ? true : false, error };
 }

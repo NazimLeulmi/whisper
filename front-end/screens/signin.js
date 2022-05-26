@@ -1,27 +1,22 @@
 import React from "react";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import {
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  View,
-  Text,
-  TextInput,
-  Image,
-  Pressable,
-} from "react-native";
+import { KeyboardAvoidingView, View } from "react-native";
 import { s } from "./signup";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useRoute } from "@react-navigation/native";
 import Label from "./components/authLabel";
 import Header from "./components/authHeader";
 import Input from "./components/authInput";
 import Error from "./components/authError";
+import Btn from "./components/authBtn";
+import Link from "./components/authLink";
+import { useFocusEffect } from "@react-navigation/native";
 
 function SignIn({ navigation }) {
   // React hook form state
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -29,7 +24,13 @@ function SignIn({ navigation }) {
   function submitForm(data) {
     console.log(data);
   }
-  let [hidePassword, setHidePassword] = React.useState(true);
+  useFocusEffect(
+    React.useCallback(() => {
+      return function () {
+        reset();
+      };
+    }, [])
+  );
   return (
     <View style={s.container}>
       <KeyboardAvoidingView behavior="position">
@@ -42,14 +43,12 @@ function SignIn({ navigation }) {
         <Label text="PASSWORD" />
         <Input control={control} name="password" error={errors.password} />
         {errors.password ? <Error text={errors.password.message} /> : null}
-        <Pressable style={s.btn} onPress={handleSubmit(submitForm)}>
-          <Text style={s.btnText}>SIGN IN</Text>
-        </Pressable>
-        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-          <Text style={s.link}>
-            Don't have an account ? <Text style={s.bold}> SIGN UP</Text>
-          </Text>
-        </TouchableOpacity>
+        <Btn
+          handleSubmit={handleSubmit}
+          submitForm={submitForm}
+          route={route.name}
+        />
+        <Link route={route.name} navigate={navigation.navigate} />
       </KeyboardAvoidingView>
     </View>
   );

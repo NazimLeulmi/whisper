@@ -25,11 +25,11 @@ function AuthInput({ control, name, error, password }) {
         message: "The minimum length is 6 characters",
       },
       maxLength: {
-        value: 40,
-        message: "The maximum length is 40 characters",
+        value: 60,
+        message: "The maximum length is 60 characters",
       },
       pattern: {
-        value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+        value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         message: "The email is invalid",
       },
     },
@@ -67,6 +67,7 @@ function AuthInput({ control, name, error, password }) {
   return (
     <View style={s.inputContainer}>
       <Controller
+        defaultValue=""
         control={control}
         name={name}
         rules={rules[name]}
@@ -79,6 +80,7 @@ function AuthInput({ control, name, error, password }) {
               onChangeText={onChange}
               onBlur={onBlur}
               secureTextEntry={name === "password" || name === "passwordc"}
+              value={value}
             />
             <Icon style={s.inputIcon} name={icons[name]} size={25} />
           </>
