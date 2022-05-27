@@ -2,16 +2,12 @@ import React from "react";
 import { FONTS, COLORS } from "./index";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {
-  KeyboardAvoidingView,
-  TouchableOpacity,
   View,
   Text,
   TextInput,
   Image,
-  Pressable,
   StatusBar,
   StyleSheet,
-  Dimensions,
   FlatList,
 } from "react-native";
 

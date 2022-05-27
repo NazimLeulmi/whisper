@@ -36,7 +36,7 @@ const TEXT =
 function HomeScreen({ navigation }) {
   return (
     <View style={s.container}>
-      <StatusBar style="light" translucent={false} />
+      <StatusBar style="dark" />
       <Image style={s.faces} source={require("../assets/faces.jpg")} />
       <Text style={s.headline}>SHARE WITHOUT INSECURITY</Text>
       <Text style={s.intro}>{TEXT}</Text>
@@ -59,7 +59,6 @@ const s = StyleSheet.create({
     height: 300,
     alignSelf: "center",
     margin: 20,
-    marginTop: 0,
     borderRadius: 10,
   },
   headline: {

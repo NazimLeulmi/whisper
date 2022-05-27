@@ -10,6 +10,7 @@ import Error from "./components/authError";
 import Btn from "./components/authBtn";
 import Link from "./components/authLink";
 import { useFocusEffect } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 
 function SignUp({ navigation }) {
   const route = useRoute();
@@ -24,10 +25,11 @@ function SignUp({ navigation }) {
 
   const password = React.useRef({});
   password.current = watch("password", "");
-  console.log("Rendered");
+  const [disabled, setDisabled] = React.useState(false);
 
   async function submitForm(formData) {
     try {
+      setDisabled(true);
       let response = await axios.post(
         "http://192.168.1.103:8888/signup",
         formData
@@ -43,6 +45,7 @@ function SignUp({ navigation }) {
           });
         }
       }
+      setDisabled(false);
     } catch (error) {
       console.log(error);
     }
@@ -58,6 +61,7 @@ function SignUp({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={s.container}>
+      <StatusBar style="dark" />
       <ScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always"
@@ -88,6 +92,7 @@ function SignUp({ navigation }) {
           handleSubmit={handleSubmit}
           submitForm={submitForm}
           route={route.name}
+          disabled={disabled}
         />
         <Link route={route.name} navigate={navigation.navigate} />
       </ScrollView>
@@ -100,6 +105,7 @@ export const s = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(255,255,255,.9)",
     padding: 20,
+    paddingTop: 40,
   },
 });
 

@@ -1,10 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { COLORS, FONTS } from "../index";
 
-function AuthBtn({ handleSubmit, submitForm, route }) {
+function AuthBtn({ handleSubmit, submitForm, route, disabled }) {
   return (
-    <TouchableOpacity style={s.btn} onPress={handleSubmit(submitForm)}>
+    <TouchableOpacity
+      style={s.btn}
+      onPress={handleSubmit(submitForm)}
+      disabled={disabled}
+    >
+      {disabled ? <ActivityIndicator size="small" color="white" /> : null}
       <Text style={s.btnText}>
         {route === "SignUp" ? "SIGN UP" : "SIGN IN"}
       </Text>
@@ -21,12 +31,14 @@ const s = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
+    flexDirection: "row",
   },
   btnText: {
     fontFamily: FONTS.regular,
     fontSize: 22,
     color: "white",
     letterSpacing: 1,
+    marginLeft: 15,
   },
 });
 

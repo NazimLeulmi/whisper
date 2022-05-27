@@ -10,7 +10,7 @@ import SignIn from "./screens/signin";
 import { Text, View } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Chats from "./screens/chats";
-import Confirmation from "./screens/components/authError";
+import Confirmation from "./screens/confirmation";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -98,7 +98,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Confirmation"
+        initialRouteName="Home"
       >
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />

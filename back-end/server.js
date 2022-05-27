@@ -58,6 +58,7 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/signin", async (req, res) => {
+  console.log(req.body, "Sign In Form");
   const { isValid, error } = validation.validateSignIn(req.body.email);
   if (!isValid) return res.json({ isValid, error });
   try {
@@ -73,23 +74,26 @@ app.post("/signin", async (req, res) => {
         isValid: false,
         error: "The password is incorrect",
       });
-    if (user.approved === false)
-      return res.json({
-        isValid: false,
-        errors: "The account has to be verified",
-      });
-    // The user login data is correct
-    req.session.userId = user._id;
-    req.session.email = user.email;
-    req.session.username = user.username;
     return res.json({
       success: true,
-      user: {
-        id: user._id,
-        email: user.email,
-        username: user.username,
-      },
     });
+    // if (user.approved === false)
+    //   return res.json({
+    //     isValid: false,
+    //     errors: "The account has to be verified",
+    //   });
+    // The user login data is correct
+    // req.session.userId = user._id;
+    // req.session.email = user.email;
+    // req.session.username = user.username;
+    // return res.json({
+    //   success: true,
+    //   user: {
+    //     id: user._id,
+    //     email: user.email,
+    //     username: user.username,
+    //   },
+    // });
   } catch (err) {
     console.log(err);
   }
