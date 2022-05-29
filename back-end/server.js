@@ -68,32 +68,29 @@ app.post("/signin", async (req, res) => {
         isValid: false,
         error: "The user doesn't exist",
       });
+    // The user login data is correct
     const isCorrect = await bcrypt.compare(req.body.password, user.password);
     if (!isCorrect)
       return res.json({
         isValid: false,
         error: "The password is incorrect",
       });
-    return res.json({
-      success: true,
-    });
     // if (user.approved === false)
     //   return res.json({
     //     isValid: false,
     //     errors: "The account has to be verified",
     //   });
-    // The user login data is correct
-    // req.session.userId = user._id;
-    // req.session.email = user.email;
-    // req.session.username = user.username;
-    // return res.json({
-    //   success: true,
-    //   user: {
-    //     id: user._id,
-    //     email: user.email,
-    //     username: user.username,
-    //   },
-    // });
+    req.session.userId = user._id;
+    req.session.email = user.email;
+    req.session.username = user.name;
+    return res.json({
+      success: true,
+      user: {
+        id: user._id,
+        email: user.email,
+        username: user.name,
+      },
+    });
   } catch (err) {
     console.log(err);
   }

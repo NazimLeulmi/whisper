@@ -1,5 +1,5 @@
 import React from "react";
-import { KeyboardAvoidingView, View, ScrollView } from "react-native";
+import { KeyboardAvoidingView, ScrollView } from "react-native";
 import { s } from "./signup";
 import { useForm } from "react-hook-form";
 import { useRoute } from "@react-navigation/native";
@@ -34,15 +34,12 @@ function SignIn({ navigation }) {
         formData
       );
       let data = await response.data;
-      console.log(data);
       if (data.isValid === false) {
-        setError("server", {
-          type: "server",
-          message: data.error,
-        });
+        console.log(data.error);
+        setError("password", { message: data.error });
       }
       if (data.success === true) {
-        // navigation.navigate("Main", { screen: "Chats" });
+        navigation.navigate("Main", { screen: "Chats" });
         console.log("Success");
       }
       setDisabled(false);
@@ -73,7 +70,6 @@ function SignIn({ navigation }) {
         <Label text="PASSWORD" />
         <Input control={control} name="password" error={errors.password} />
         {errors.password ? <Error text={errors.password.message} /> : null}
-        {errors.server ? <Error text={errors.server.message} /> : null}
         <Btn
           handleSubmit={handleSubmit}
           submitForm={submitForm}
