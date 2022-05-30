@@ -2,10 +2,11 @@ import React from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { COLORS, FONTS } from "../index";
+import Animated, { withSpring } from "react-native-reanimated";
 
-function ActionBtn() {
+function ActionBtn({ openPanel }) {
   return (
-    <TouchableOpacity style={s.fab}>
+    <TouchableOpacity style={s.fab} onPress={openPanel}>
       <Icon name="chat-plus" size={30} color="white" />
     </TouchableOpacity>
   );

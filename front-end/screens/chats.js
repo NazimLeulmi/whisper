@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Dimensions } from "react-native";
 
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
@@ -8,9 +8,14 @@ import ChatsHeader from "./components/chatsHeader";
 import Search from "./components/search";
 import ChatCard from "./components/chatCard";
 import ActionBtn from "./components/fab";
+import SlidingPanel from "./components/slidingPanel";
+import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 
 function Chats() {
   let [chats, setChats] = React.useState(null);
+  let [isOpen, triggerPanel] = React.useState(false);
+  let panelHeight = useSharedValue(0);
+
   useFocusEffect(
     React.useCallback(() => {
       async function fetchChats() {
@@ -34,6 +39,10 @@ function Chats() {
     }, [])
   );
 
+  function openPanel() {
+    console.log("Animating");
+    panelHeight.value = 500;
+  }
   return (
     <View style={s.container}>
       <StatusBar />
@@ -45,7 +54,8 @@ function Chats() {
         renderItem={({ item }) => <ChatCard item={item} />}
         keyExtractor={(item) => item.id}
       />
-      <ActionBtn />
+      <ActionBtn openPanel={openPanel} />
+      <SlidingPanel height={panelHeight.value} />
     </View>
   );
 }
