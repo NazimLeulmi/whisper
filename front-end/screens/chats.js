@@ -9,12 +9,15 @@ import Search from "./components/search";
 import ChatCard from "./components/chatCard";
 import ActionBtn from "./components/fab";
 import SlidingPanel from "./components/slidingPanel";
-import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, {
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 
 function Chats() {
   let [chats, setChats] = React.useState(null);
-  let [isOpen, triggerPanel] = React.useState(false);
-  let panelHeight = useSharedValue(0);
+  let [open, setOpen] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -39,10 +42,6 @@ function Chats() {
     }, [])
   );
 
-  function openPanel() {
-    console.log("Animating");
-    panelHeight.value = 500;
-  }
   return (
     <View style={s.container}>
       <StatusBar />
@@ -54,8 +53,8 @@ function Chats() {
         renderItem={({ item }) => <ChatCard item={item} />}
         keyExtractor={(item) => item.id}
       />
-      <ActionBtn openPanel={openPanel} />
-      <SlidingPanel height={panelHeight.value} />
+      <ActionBtn />
+      <SlidingPanel />
     </View>
   );
 }

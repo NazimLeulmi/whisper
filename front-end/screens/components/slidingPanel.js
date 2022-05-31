@@ -5,16 +5,14 @@ import Animated, {
 import { Dimensions, StyleSheet, View, Text } from "react-native";
 
 const screenWidth = Dimensions.get("screen").width;
+const screenHeight = Dimensions.get("screen").height;
 
-function SlidingPanel({ height }) {
+function SlidingPanel({}) {
   const animatedStyles = useAnimatedStyle(() => {
-    return {
-      height: height,
-      width: screenWidth,
-    };
+    return {};
   });
   return (
-    <Animated.View style={animatedStyles}>
+    <Animated.View style={[s.panel, animatedStyles]}>
       <Text>CONTACT</Text>
       <Text>CONTACT</Text>
       <Text>CONTACT</Text>
@@ -25,7 +23,12 @@ function SlidingPanel({ height }) {
 
 const s = (props) =>
   StyleSheet.create({
-    panel: {},
+    panel: {
+      position: "abslute",
+      height: screenHeight,
+      width: screenWidth,
+      backgroundColor: "red",
+    },
   });
 
 export default SlidingPanel;
