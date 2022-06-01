@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, FlatList, Dimensions } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
@@ -8,16 +8,9 @@ import ChatsHeader from "./components/chatsHeader";
 import Search from "./components/search";
 import ChatCard from "./components/chatCard";
 import ActionBtn from "./components/fab";
-import SlidingPanel from "./components/slidingPanel";
-import Animated, {
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from "react-native-reanimated";
 
 function Chats() {
   let [chats, setChats] = React.useState(null);
-  let [open, setOpen] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -54,7 +47,6 @@ function Chats() {
         keyExtractor={(item) => item.id}
       />
       <ActionBtn />
-      <SlidingPanel />
     </View>
   );
 }
@@ -63,6 +55,7 @@ const s = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "whitesmoke",
+    position: "relative",
   },
 
   chatsList: {

@@ -1,10 +1,9 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { COLORS, FONTS } from "../index";
-import Animated, { withSpring } from "react-native-reanimated";
+import { COLORS } from "../index";
 
-function ActionBtn({ openPanel }) {
+function ActionBtn({}) {
   return (
     <TouchableOpacity style={s.fab} onPress={openPanel}>
       <Icon name="chat-plus" size={30} color="white" />
@@ -23,6 +22,7 @@ const s = StyleSheet.create({
     justifyContent: "center",
     bottom: 15,
     right: 15,
+    zIndex: 0,
   },
 });
 
