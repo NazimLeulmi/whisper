@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { COLORS } from "../index";
 
-function ActionBtn({}) {
+function ActionBtn({ selectContacts }) {
   return (
-    <TouchableOpacity style={s.fab} onPress={openPanel}>
+    <TouchableOpacity style={s.fab} onPress={selectContacts}>
       <Icon name="chat-plus" size={30} color="white" />
     </TouchableOpacity>
   );

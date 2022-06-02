@@ -9,7 +9,7 @@ import Search from "./components/search";
 import ChatCard from "./components/chatCard";
 import ActionBtn from "./components/fab";
 
-function Chats() {
+function Chats({ navigation }) {
   let [chats, setChats] = React.useState(null);
 
   useFocusEffect(
@@ -35,6 +35,9 @@ function Chats() {
     }, [])
   );
 
+  function selectContacts() {
+    navigation.navigate("SelectContacts");
+  }
   return (
     <View style={s.container}>
       <StatusBar />
@@ -46,7 +49,7 @@ function Chats() {
         renderItem={({ item }) => <ChatCard item={item} />}
         keyExtractor={(item) => item.id}
       />
-      <ActionBtn />
+      <ActionBtn selectContacts={selectContacts} />
     </View>
   );
 }
