@@ -10,14 +10,14 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { COLORS, FONTS } from "../index";
 
 const screenWidth = Dimensions.get("screen").width;
-function SelectHeader({}) {
+function SelectHeader({ counter }) {
   return (
     <View style={s.container}>
       <TouchableOpacity>
         <Icon name="arrow-left" size={30} color={COLORS.feiryrose} />
       </TouchableOpacity>
       <Text style={s.header}>SELECT CONTACTS</Text>
-      <Text style={s.counter}>0</Text>
+      <Text style={s.counter}>{counter}</Text>
       <Icon name="account" size={25} color={COLORS.feiryrose} />
     </View>
   );

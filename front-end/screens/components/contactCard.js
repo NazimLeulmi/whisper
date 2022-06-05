@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { FONTS, COLORS } from "../index";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-function ContactCard({ item }) {
+function ContactCard({ item, selectContact }) {
   return (
-    <TouchableOpacity style={s.container}>
+    <TouchableOpacity style={s.container} onPress={selectContact}>
       <Image style={s.avatar} source={{ uri: item.picture }} />
       <View style={s.textContainer}>
         <Text style={s.name}>
@@ -13,6 +14,9 @@ function ContactCard({ item }) {
         <Text style={s.status} numberOfLines={1}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
         </Text>
+        {item.selected ? (
+          <Icon name="check-circle" size={26} style={s.icon} />
+        ) : null}
       </View>
     </TouchableOpacity>
   );
@@ -53,6 +57,11 @@ let s = StyleSheet.create({
     width: "70%",
     fontSize: 13,
     color: "rgba(0,0,0,.7)",
+  },
+  icon: {
+    position: "absolute",
+    right: 15,
+    color: COLORS.starblue,
   },
 });
 

@@ -8,8 +8,26 @@ import ContactCard from "./components/contactCard";
 import Search from "./components/search";
 
 function SelectContacts() {
-  let [contacts, setContacts] = React.useState(null);
-  let [selected, setSelected] = React.useState(null);
+  let [contacts, setContacts] = React.useState([]);
+  let [counter, setCounter] = React.useState(0);
+
+  function selectContact(contact) {
+    let newArray = [...contacts];
+    for (let i = 0; i < newArray.length; i++) {
+      if (newArray[i].id === contact.id) {
+        if (newArray[i].selected === false) {
+          newArray[i].selected = true;
+          setCounter((prev) => prev + 1);
+          setContacts(newArray);
+        } else {
+          newArray[i].selected = false;
+          setCounter((prev) => prev - 1);
+          setContacts(newArray);
+        }
+      }
+    }
+  }
+
   useFocusEffect(
     React.useCallback(() => {
       async function fetchContacts() {
@@ -23,7 +41,9 @@ function SelectContacts() {
             }
           );
           let contacts = response.data.data;
+          contacts.forEach((contact) => (contact.selected = false));
           setContacts(contacts);
+          console.log(contacts);
         } catch (error) {
           console.log(error);
         }
@@ -34,12 +54,14 @@ function SelectContacts() {
   return (
     <View>
       <StatusBar backgroundColor={COLORS.starblue} />
-      <SelectHeader />
+      <SelectHeader counter={counter} />
       <Search />
       <FlatList
         style={s.list}
         data={contacts}
-        renderItem={({ item }) => <ContactCard item={item} />}
+        renderItem={({ item }) => (
+          <ContactCard item={item} selectContact={() => selectContact(item)} />
+        )}
         keyExtractor={(item) => item.id}
       />
     </View>
