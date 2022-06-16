@@ -9,7 +9,7 @@ const session = require("express-session");
 let app = express();
 
 // app.use(cors({
-//   origin: ["http://localhost:8888", "http://192.168.1.131:3000", "http://192.168.1.131"],
+//   origin: ["http://localhost:8888", "http://192.168.1.103:3000", "http://192.168.1.103"],
 //   credentials: true
 // }));
 app.use(express.json());

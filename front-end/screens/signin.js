@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native";
 import { s } from "./signup";
 import { useForm } from "react-hook-form";

@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+  Platform,
+} from "react-native";
 import { COLORS, FONTS } from "./index";
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
@@ -52,8 +58,8 @@ function SelectContacts() {
     }, [])
   );
   return (
-    <View>
-      <StatusBar backgroundColor={COLORS.starblue} />
+    <SafeAreaView style={s.container}>
+      <StatusBar backgroundColor={COLORS.starblue} barStyle="light" />
       <SelectHeader counter={counter} />
       <Search />
       <FlatList
@@ -64,12 +70,15 @@ function SelectContacts() {
         )}
         keyExtractor={(item) => item.id}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const s = StyleSheet.create({
   list: { padding: 15 },
+  container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
 });
 
 export default SelectContacts;

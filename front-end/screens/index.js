@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Dimensions,
@@ -8,6 +8,7 @@ import {
   Text,
   Pressable,
 } from "react-native";
+import { AuthContext } from "./global/authContext";
 
 export const COLORS = {
   /* CSS HEX */
@@ -40,7 +41,7 @@ function HomeScreen({ navigation }) {
       <Image style={s.faces} source={require("../assets/faces.jpg")} />
       <Text style={s.headline}>SHARE WITHOUT INSECURITY</Text>
       <Text style={s.intro}>{TEXT}</Text>
-      <Pressable style={s.btn} onPress={() => navigation.navigate("SignUp")}>
+      <Pressable style={s.btn} onPress={() => navigation.navigate("SignIn")}>
         <Text style={s.btnText}>GET STARTED</Text>
       </Pressable>
     </View>

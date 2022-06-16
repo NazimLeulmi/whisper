@@ -16,7 +16,6 @@ const s = StyleSheet.create({
     flexDirection: "row",
     padding: 15,
     alignItems: "center",
-    marginTop: 40,
   },
   brand: {
     fontSize: 28,

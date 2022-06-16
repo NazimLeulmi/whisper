@@ -14,11 +14,11 @@ function SelectHeader({ counter }) {
   return (
     <View style={s.container}>
       <TouchableOpacity>
-        <Icon name="arrow-left" size={30} color={COLORS.feiryrose} />
+        <Icon name="arrow-left" size={30} color="white" />
       </TouchableOpacity>
       <Text style={s.header}>SELECT CONTACTS</Text>
       <Text style={s.counter}>{counter}</Text>
-      <Icon name="account" size={25} color={COLORS.feiryrose} />
+      <Icon name="account" size={25} color="white" />
     </View>
   );
 }
@@ -26,13 +26,16 @@ function SelectHeader({ counter }) {
 const s = StyleSheet.create({
   container: {
     width: screenWidth,
-    height: 80,
-    backgroundColor: COLORS.starblue,
+    height: 120,
+    backgroundColor: "green",
     flexDirection: "row",
     alignItems: "center",
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
     marginBottom: 15,
+    backgroundColor: COLORS.starblue,
+    height: 100,
+    width: screenWidth,
   },
   header: {
     fontFamily: FONTS.regular,

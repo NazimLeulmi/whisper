@@ -101,7 +101,7 @@ let s = StyleSheet.create({
     backgroundColor: "#FAF9F6",
     borderWidth: 0.5,
     borderColor: "rgba(0,0,0,.1)",
-    borderRadius: 15,
+    borderRadius: 10,
     marginTop: 8,
     marginBottom: 10,
     fontSize: 18,
