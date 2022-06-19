@@ -12,6 +12,7 @@ import Link from "./components/authLink";
 import { useFocusEffect } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import axios from "axios";
+import { AuthContext } from "./global/authContext";
 
 function SignIn({ navigation }) {
   // React hook form state
@@ -25,6 +26,7 @@ function SignIn({ navigation }) {
 
   const route = useRoute();
   const [disabled, setDisabled] = React.useState(false);
+  const { user, setUser } = useContext(AuthContext);
 
   async function submitForm(formData) {
     setDisabled(true);
@@ -38,10 +40,7 @@ function SignIn({ navigation }) {
         console.log(data.error);
         setError("password", { message: data.error });
       }
-      if (data.success === true) {
-        navigation.navigate("Main", { screen: "Chats" });
-        console.log("Success");
-      }
+      if (data.success === true) setUser(data.user);
       setDisabled(false);
     } catch (error) {
       console.log(error);
@@ -73,7 +72,7 @@ function SignIn({ navigation }) {
         <Btn
           handleSubmit={handleSubmit}
           submitForm={submitForm}
-          route={route.name}
+          text="SIGN IN"
           disabled={disabled}
         />
         <Link route={route.name} navigate={navigation.navigate} />

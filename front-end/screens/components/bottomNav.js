@@ -6,6 +6,7 @@ import { COLORS, FONTS } from "../index";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SelectContacts from "../selectContacts";
+import Contacts from "../contacts";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,21 +16,14 @@ function ChatNavigation() {
   return (
     <ChatStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="ChatsList"
+      initialRouteName="ChatList"
     >
-      <ChatStack.Screen name="ChatsList" component={Chats} />
+      <ChatStack.Screen name="ChatList" component={Chats} />
       <ChatStack.Screen name="SelectContacts" component={SelectContacts} />
     </ChatStack.Navigator>
   );
 }
 
-function Contacts() {
-  return (
-    <View>
-      <Text>CONTACTS</Text>
-    </View>
-  );
-}
 function Notifications() {
   return (
     <View>

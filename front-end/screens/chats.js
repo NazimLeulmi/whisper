@@ -3,11 +3,12 @@ import { View, StyleSheet, FlatList, StatusBar } from "react-native";
 
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
-import ChatsHeader from "./components/chatsHeader";
 import Search from "./components/search";
 import ChatCard from "./components/chatCard";
 import ActionBtn from "./components/fab";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Header from "./components/header";
+import { COLORS } from ".";
 
 function Chats({ navigation }) {
   let [chats, setChats] = React.useState(null);
@@ -33,14 +34,13 @@ function Chats({ navigation }) {
       fetchChats();
     }, [])
   );
-
   function selectContacts() {
     navigation.navigate("SelectContacts");
   }
   return (
     <SafeAreaView style={s.container}>
-      <StatusBar />
-      <ChatsHeader />
+      <StatusBar backgroundColor={COLORS.starblue} barStyle="light-content" />
+      <Header icon="account-group" text="GROUPS" />
       <Search />
       <FlatList
         style={s.chatsList}
@@ -48,7 +48,7 @@ function Chats({ navigation }) {
         renderItem={({ item }) => <ChatCard item={item} />}
         keyExtractor={(item) => item.id}
       />
-      <ActionBtn selectContacts={selectContacts} />
+      <ActionBtn handlePress={selectContacts} icon="chat-plus" />
     </SafeAreaView>
   );
 }
@@ -58,7 +58,6 @@ const s = StyleSheet.create({
     flex: 1,
     backgroundColor: "whitesmoke",
     position: "relative",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 
   chatsList: {

@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { COLORS, FONTS } from "../index";
 
-function AuthBtn({ handleSubmit, submitForm, route, disabled }) {
+function AuthBtn({ handleSubmit, submitForm, disabled, text }) {
   return (
     <TouchableOpacity
       style={s.btn}
@@ -15,9 +15,7 @@ function AuthBtn({ handleSubmit, submitForm, route, disabled }) {
       disabled={disabled}
     >
       {disabled ? <ActivityIndicator size="small" color="white" /> : null}
-      <Text style={s.btnText}>
-        {route === "SignUp" ? "SIGN UP" : "SIGN IN"}
-      </Text>
+      <Text style={s.btnText}>{text}</Text>
     </TouchableOpacity>
   );
 }

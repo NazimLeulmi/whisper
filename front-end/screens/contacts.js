@@ -3,35 +3,15 @@ import { StyleSheet, FlatList, SafeAreaView, StatusBar } from "react-native";
 import { COLORS, FONTS } from "./index";
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
-import SelectHeader from "./components/selectHeader";
 import ContactCard from "./components/contactCard";
 import Search from "./components/search";
+import ActionBtn from "./components/fab";
+import Header from "./components/header";
+import ModalView from "./components/modal";
 
-function SelectContacts({ navigation }) {
+function Contacts({ navigation }) {
   let [contacts, setContacts] = React.useState([]);
-  let [counter, setCounter] = React.useState(0);
-
-  function back() {
-    console.log("Going back");
-    navigation.goBack();
-  }
-
-  function selectContact(contact) {
-    let newArray = [...contacts];
-    for (let i = 0; i < newArray.length; i++) {
-      if (newArray[i].id === contact.id) {
-        if (newArray[i].selected === false) {
-          newArray[i].selected = true;
-          setCounter((prev) => prev + 1);
-          setContacts(newArray);
-        } else {
-          newArray[i].selected = false;
-          setCounter((prev) => prev - 1);
-          setContacts(newArray);
-        }
-      }
-    }
-  }
+  const [open, setOpen] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -56,25 +36,35 @@ function SelectContacts({ navigation }) {
       fetchContacts();
     }, [])
   );
+
+  function toggleModal() {
+    setOpen((prevState) => !prevState);
+  }
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={s.container}>
       <StatusBar backgroundColor={COLORS.starblue} barStyle="light" />
-      <SelectHeader counter={counter} navigate={back} />
+      <Header icon="account-multiple" text="CONTACTS" />
       <Search />
       <FlatList
         style={s.list}
         data={contacts}
-        renderItem={({ item }) => (
-          <ContactCard item={item} selectContact={() => selectContact(item)} />
-        )}
+        renderItem={({ item }) => <ContactCard item={item} />}
         keyExtractor={(item) => item.id}
       />
+      <ActionBtn icon="account-plus" handlePress={toggleModal} />
+      <ModalView visible={open} toggleModal={toggleModal} />
     </SafeAreaView>
   );
 }
 
 const s = StyleSheet.create({
   list: { padding: 15 },
+  container: {
+    flex: 1,
+    backgroundColor: "whitesmoke",
+    position: "relative",
+  },
 });
 
-export default SelectContacts;
+export default Contacts;

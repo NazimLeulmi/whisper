@@ -91,7 +91,7 @@ function SignUp({ navigation }) {
         <Btn
           handleSubmit={handleSubmit}
           submitForm={submitForm}
-          route={route.name}
+          text="SIGN UP"
           disabled={disabled}
         />
         <Link route={route.name} navigate={navigation.navigate} />

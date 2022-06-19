@@ -10,10 +10,10 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { COLORS, FONTS } from "../index";
 
 const screenWidth = Dimensions.get("screen").width;
-function SelectHeader({ counter }) {
+function SelectHeader({ counter, navigate }) {
   return (
     <View style={s.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={navigate}>
         <Icon name="arrow-left" size={30} color="white" />
       </TouchableOpacity>
       <Text style={s.header}>SELECT CONTACTS</Text>
@@ -26,16 +26,13 @@ function SelectHeader({ counter }) {
 const s = StyleSheet.create({
   container: {
     width: screenWidth,
-    height: 120,
-    backgroundColor: "green",
+    height: 80,
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 15,
     paddingRight: 15,
     marginBottom: 15,
     backgroundColor: COLORS.starblue,
-    height: 100,
-    width: screenWidth,
   },
   header: {
     fontFamily: FONTS.regular,
