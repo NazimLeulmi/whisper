@@ -13,29 +13,7 @@ function Contacts({ navigation }) {
   let [contacts, setContacts] = React.useState([]);
   const [open, setOpen] = React.useState(false);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      async function fetchContacts() {
-        try {
-          let response = await axios.get(
-            "https://dummyapi.io/data/v1/user?limit=10",
-            {
-              headers: {
-                "app-id": "627b889d977f951db58d57db",
-              },
-            }
-          );
-          let contacts = response.data.data;
-          contacts.forEach((contact) => (contact.selected = false));
-          setContacts(contacts);
-          console.log(contacts);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      fetchContacts();
-    }, [])
-  );
+  useFocusEffect(React.useCallback(() => {}, []));
 
   function toggleModal() {
     setOpen((prevState) => !prevState);

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, FlatList, StatusBar } from "react-native";
-
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 import Search from "./components/search";
@@ -9,34 +8,28 @@ import ActionBtn from "./components/fab";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "./components/header";
 import { COLORS } from ".";
+import { io } from "socket.io-client";
+import { SocketContext } from "./global/socketContext";
 
 function Chats({ navigation }) {
   let [chats, setChats] = React.useState(null);
+  let { socket, setSocket } = useContext(SocketContext);
 
   useFocusEffect(
     React.useCallback(() => {
-      async function fetchChats() {
-        try {
-          let response = await axios.get(
-            "https://dummyapi.io/data/v1/user?limit=10",
-            {
-              headers: {
-                "app-id": "627b889d977f951db58d57db",
-              },
-            }
-          );
-          let chats = response.data.data;
-          setChats(chats);
-        } catch (error) {
-          console.error(error);
-        }
+      if (!socket) {
+        const socket = io("ws://192.168.1.103:8888", {
+          reconnectionDelayMax: 10000,
+        });
+        setSocket(socket);
+        console.log("Connected to socket-io");
       }
-      fetchChats();
-    }, [])
+    }, [socket])
   );
   function selectContacts() {
     navigation.navigate("SelectContacts");
   }
+
   return (
     <SafeAreaView style={s.container}>
       <StatusBar backgroundColor={COLORS.starblue} barStyle="light-content" />

@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import { AuthProvider } from "./screens/global/authContext";
 import axios from "axios";
 import StackNav from "./screens/components/stack";
+import { SocketProvider } from "./screens/global/socketContext";
 
 // Send credentials with HTTP requests
 axios.defaults.withCredentials = true;
@@ -23,7 +24,9 @@ function App() {
 
   return (
     <AuthProvider>
-      <StackNav />
+      <SocketProvider>
+        <StackNav />
+      </SocketProvider>
     </AuthProvider>
   );
 }

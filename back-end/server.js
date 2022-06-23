@@ -1,17 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 const validation = require("./validation");
 const models = require("./models");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const app = express();
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server).listen(server, {
+  pingTimeout: 1000,
+});
 
-let app = express();
-
-// app.use(cors({
-//   origin: ["http://localhost:8888", "http://192.168.1.103:3000", "http://192.168.1.103"],
-//   credentials: true
-// }));
 app.use(express.json());
 
 app.use(
@@ -112,4 +112,13 @@ app.get("/check-auth", async (req, res) => {
     return res.json({ success: false });
   }
 });
-app.listen(8888, () => console.log("Node.js server running on port 8888"));
+
+// WEB SOCKET
+io.on("connection", (socket) => {
+  console.log("a user connected", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected", socket.id);
+  });
+});
+server.listen(8888, () => console.log("Node.js server running on port 8888"));
