@@ -32,6 +32,7 @@ const s = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.5,
     borderColor: "rgba(0,0,0,.1)",
+    marginTop: 10,
   },
   searchIcon: {
     position: "absolute",

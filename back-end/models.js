@@ -1,10 +1,23 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+
 const notificationSchema = new Schema(
   {
     user_name: { type: String, required: true },
     user_id: { type: Schema.Types.ObjectId, required: true },
-    content: { type: String, required: true },
+    type: { type: String, required: true }, // user || group
+    group_name: { type: String, required: false },
+    approved: { type: Boolean, default: false },
+  },
+  { timestamps: true }
+);
+const contactSchema = new Schema(
+  {
+    user_name: { type: String, required: true },
+    user_id: { type: Schema.Types.ObjectId, required: true },
+    type: { type: String, required: true }, // user || group
+    group_name: { type: String, required: false },
+    approved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
@@ -13,8 +26,7 @@ const msgSchema = new Schema(
   {
     user_name: { type: String, required: true },
     user_id: { type: Schema.Types.ObjectId, required: true },
-    content: { type: String, required: true },
-    isText: { type: Boolean, default: true },
+    avatar: { type: String },
   },
   { timestamps: true }
 );
@@ -27,12 +39,7 @@ const userSchema = new Schema(
     approved: { type: Boolean, default: false },
     status: { type: String },
     avatar: { type: String },
-    contacts: [
-      {
-        user_name: { type: String, required: true },
-        user_id: { type: Schema.Types.ObjectId, required: true },
-      },
-    ],
+    contacts: [contactSchema],
     notifications: [notificationSchema],
   },
   { timestamps: true }
@@ -40,6 +47,5 @@ const userSchema = new Schema(
 
 const UserModel = mongoose.model("User", userSchema);
 const MsgModel = mongoose.model("Msg", msgSchema);
-const NotificationModel = mongoose.model("Notification", notificationSchema);
 
 module.exports = { UserModel, MsgModel };

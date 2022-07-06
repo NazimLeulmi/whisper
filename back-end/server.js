@@ -8,8 +8,11 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server).listen(server, {
+const io = new Server({ noServer: true }).listen(server, {
   pingTimeout: 1000,
+  cors: {
+    origin: ["http://localhost", "http://localhost:8888"],
+  },
 });
 
 app.use(express.json());

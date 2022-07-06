@@ -1,7 +1,6 @@
 import React from "react";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
-
 import { AuthProvider } from "./screens/global/authContext";
 import axios from "axios";
 import StackNav from "./screens/components/stack";

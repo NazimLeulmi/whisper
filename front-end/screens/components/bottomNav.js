@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SelectContacts from "../selectContacts";
 import Contacts from "../contacts";
+import Notifications from "../notifications";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,13 +25,6 @@ function ChatNavigation() {
   );
 }
 
-function Notifications() {
-  return (
-    <View>
-      <Text>NOTIFICATIONS</Text>
-    </View>
-  );
-}
 function Settings() {
   return (
     <View>

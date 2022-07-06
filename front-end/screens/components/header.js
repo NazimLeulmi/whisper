@@ -22,7 +22,7 @@ const s = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 15,
     paddingRight: 15,
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   header: {
     fontFamily: FONTS.regular,
